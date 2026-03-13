@@ -56,18 +56,106 @@ const PLAYGROUNDS = [
 ];
 
 const ACTIVITIES = [
-  { id: 100, name: "South Carolina Aquarium", area: "Downtown", address: "100 Aquarium Wharf, Charleston", type: "attraction", desc: "5,000+ marine animals, touch tanks, daily feedings. Great Ocean Tank with sharks and sea turtles.", icon: "🐠", link: "scaquarium.org", tags: ["Indoor", "Educational"] },
-  { id: 101, name: "Children's Museum of the Lowcountry", area: "Downtown", address: "25 Ann St, Charleston", type: "attraction", desc: "Hands-on exhibits for little explorers. Pirate ship, Imagination Playground, and Lowcountry Livin' role play.", icon: "🎨", link: "explorecml.org", tags: ["Indoor", "Hands-on"] },
-  { id: 102, name: "Charles Towne Landing", area: "West Ashley", address: "1500 Old Towne Rd, Charleston", type: "state_park", desc: "Where South Carolina began in 1670. Animal Forest zoo, replica sailing ship, 80 acres of gardens and trails.", icon: "🦬", link: "southcarolinaparks.com/charles-towne-landing", tags: ["Outdoor", "Historical", "State Park Pass"] },
-  { id: 103, name: "Pack Athletics", area: "West Ashley", address: "1012 St. Andrews Blvd, Charleston", type: "activity", desc: "Family-oriented gym with cheerleading, tumbling, ninja classes, tot open gym, and summer camps for ages 4+.", icon: "🤸", link: "allaboutthepack.com", tags: ["Indoor", "Active", "Classes"] },
-  { id: 104, name: "Pack Athletics Mt. Pleasant", area: "Mt. Pleasant", address: "1172 US Hwy 41, Mt. Pleasant", type: "activity", desc: "Second location with same great programs. Tumbling, cheer, open gym, birthday parties, and camps.", icon: "🤸", link: "allaboutthepack.com", tags: ["Indoor", "Active", "Classes"] },
-  { id: 105, name: "Whirlin' Waters Waterpark", area: "North Charleston", address: "8888 University Blvd, N. Charleston", type: "attraction", desc: "Adrenaline-pumping water rides at Wannamaker County Park. Seasonal. Gold Pass gets you in!", icon: "🌊", link: "ccprc.com", tags: ["Outdoor", "Seasonal", "Gold Pass"] },
-  { id: 106, name: "Splash Zone Waterpark", area: "James Island", address: "871 Riverland Dr, Charleston", type: "attraction", desc: "Rainforest-themed waterpark at James Island County Park. Perfect for younger kids.", icon: "🦜", link: "ccprc.com", tags: ["Outdoor", "Seasonal", "Gold Pass"] },
-  { id: 107, name: "SK8 Charleston", area: "North Charleston", address: "8888 University Blvd, N. Charleston", type: "activity", desc: "32,000 sq ft skatepark with two bowls, street course, and 200+ ft snake run. All ages welcome.", icon: "🛹", link: "ccprc.com", tags: ["Outdoor", "Active", "Gold Pass"] },
-  { id: 108, name: "Climbing Wall at JICP", area: "James Island", address: "871 Riverland Dr, Charleston", type: "activity", desc: "Outdoor climbing wall at James Island County Park. Great for adventurous kids 5+.", icon: "🧗", link: "ccprc.com", tags: ["Outdoor", "Active", "Gold Pass"] },
-  { id: 109, name: "Patriots Point", area: "Mt. Pleasant", address: "40 Patriots Point Rd, Mt. Pleasant", type: "attraction", desc: "Explore the USS Yorktown aircraft carrier, submarine, and Medal of Honor Museum on Charleston Harbor.", icon: "🚢", link: "patriotspoint.org", tags: ["Indoor/Outdoor", "Historical", "Educational"] },
-  { id: 110, name: "Magnolia Plantation & Gardens", area: "West Ashley", address: "3550 Ashley River Rd, Charleston", type: "attraction", desc: "Beautiful gardens with an enchanting children's fairy garden, nature train, and petting zoo.", icon: "🧚", link: "magnoliaplantation.com", tags: ["Outdoor", "Nature", "Educational"] },
-  { id: 111, name: "Middleton Place", area: "West Ashley", address: "4300 Ashley River Rd, Charleston", type: "attraction", desc: "Historic plantation with stableyards, farm animals, and beautiful landscaped trails great for strollers.", icon: "🐴", link: "middletonplace.org", tags: ["Outdoor", "Historical", "Nature"] },
+  { id: 100, name: "South Carolina Aquarium", area: "Downtown", address: "100 Aquarium Wharf, Charleston", type: "attraction", desc: "5,000+ marine animals, touch tanks, daily feedings. Great Ocean Tank with sharks and sea turtles.", icon: "🐠", link: "scaquarium.org", tags: ["Indoor", "Educational"], passType: null },
+  { id: 101, name: "Children's Museum of the Lowcountry", area: "Downtown", address: "25 Ann St, Charleston", type: "attraction", desc: "Hands-on exhibits for little explorers. Pirate ship, Imagination Playground, and Lowcountry Livin' role play.", icon: "🎨", link: "explorecml.org", tags: ["Indoor", "Hands-on"], passType: null },
+  { id: 102, name: "Charles Towne Landing", area: "West Ashley", address: "1500 Old Towne Rd, Charleston", type: "state_park", desc: "Where South Carolina began in 1670. Animal Forest zoo, replica sailing ship, 80 acres of gardens and trails.", icon: "🦬", link: "southcarolinaparks.com/charles-towne-landing", tags: ["Outdoor", "Historical", "State Park Pass"], passType: "state" },
+  { id: 103, name: "Pack Athletics", area: "West Ashley", address: "1012 St. Andrews Blvd, Charleston", type: "activity", desc: "Family-oriented gym with cheerleading, tumbling, ninja classes, tot open gym, and summer camps for ages 4+.", icon: "🤸", link: "allaboutthepack.com", tags: ["Indoor", "Active", "Classes"], passType: null },
+  { id: 104, name: "Pack Athletics Mt. Pleasant", area: "Mt. Pleasant", address: "1172 US Hwy 41, Mt. Pleasant", type: "activity", desc: "Second location with same great programs. Tumbling, cheer, open gym, birthday parties, and camps.", icon: "🤸", link: "allaboutthepack.com", tags: ["Indoor", "Active", "Classes"], passType: null },
+  { id: 105, name: "Whirlin' Waters Waterpark", area: "North Charleston", address: "8888 University Blvd, N. Charleston", type: "attraction", desc: "Adrenaline-pumping water rides at Wannamaker County Park. Seasonal. Gold Pass gets you in!", icon: "🌊", link: "ccprc.com", tags: ["Outdoor", "Seasonal", "Gold Pass"], passType: "gold" },
+  { id: 106, name: "Splash Zone Waterpark", area: "James Island", address: "871 Riverland Dr, Charleston", type: "attraction", desc: "Rainforest-themed waterpark at James Island County Park. Perfect for younger kids.", icon: "🦜", link: "ccprc.com", tags: ["Outdoor", "Seasonal", "Gold Pass"], passType: "gold" },
+  { id: 107, name: "SK8 Charleston", area: "North Charleston", address: "8888 University Blvd, N. Charleston", type: "activity", desc: "32,000 sq ft skatepark with two bowls, street course, and 200+ ft snake run. All ages welcome.", icon: "🛹", link: "ccprc.com", tags: ["Outdoor", "Active", "Gold Pass"], passType: "gold" },
+  { id: 108, name: "Climbing Wall at JICP", area: "James Island", address: "871 Riverland Dr, Charleston", type: "activity", desc: "Outdoor climbing wall at James Island County Park. Great for adventurous kids 5+.", icon: "🧗", link: "ccprc.com", tags: ["Outdoor", "Active", "Gold Pass"], passType: "gold" },
+  { id: 109, name: "Patriots Point", area: "Mt. Pleasant", address: "40 Patriots Point Rd, Mt. Pleasant", type: "attraction", desc: "Explore the USS Yorktown aircraft carrier, submarine, and Medal of Honor Museum on Charleston Harbor.", icon: "🚢", link: "patriotspoint.org", tags: ["Indoor/Outdoor", "Historical", "Educational"], passType: null },
+  { id: 110, name: "Magnolia Plantation & Gardens", area: "West Ashley", address: "3550 Ashley River Rd, Charleston", type: "attraction", desc: "Beautiful gardens with an enchanting children's fairy garden, nature train, and petting zoo.", icon: "🧚", link: "magnoliaplantation.com", tags: ["Outdoor", "Nature", "Educational"], passType: null },
+  { id: 111, name: "Middleton Place", area: "West Ashley", address: "4300 Ashley River Rd, Charleston", type: "attraction", desc: "Historic plantation with stableyards, farm animals, and beautiful landscaped trails great for strollers.", icon: "🐴", link: "middletonplace.org", tags: ["Outdoor", "Historical", "Nature"], passType: null },
+];
+
+const BEACHES = [
+  {
+    id: 300,
+    name: "Folly Beach County Park",
+    passType: "gold",
+    address: "1010 W Ashley Ave, Folly Beach, SC 29439",
+    desc: "Lifeguards, showers, restrooms, chair/umbrella rentals, snack bar",
+    tips: [
+      "Arrive before 10am summer weekends (lot fills by 11)",
+      "$10/car without Gold Pass",
+      "Bring pop-up tent for shade",
+      "Rinse stations at parking lot",
+      "Chair/umbrella rentals available",
+    ],
+  },
+  {
+    id: 301,
+    name: "Isle of Palms County Park",
+    passType: "gold",
+    address: "14th Ave, Isle of Palms, SC 29451",
+    desc: "Best family beach — playground, snack shack, lifeguards, showers, changing rooms, beach wheelchair",
+    tips: [
+      "Best family beach in Charleston with playground right at park",
+      "Arrive before 9:30am Saturdays in summer",
+      "$10/car or free with Gold Pass",
+      "Beach wheelchair available at entrance",
+      "Snack shack means less packing",
+    ],
+  },
+  {
+    id: 302,
+    name: "Kiawah Beachwalker Park",
+    passType: "gold",
+    address: "8 Beachwalker Dr, Kiawah Island, SC 29455",
+    desc: "Pristine, less crowded, natural dunes, maritime forest, seasonal lifeguards",
+    tips: [
+      "45 min from downtown but worth it for quiet",
+      "$10/car or free with Gold Pass",
+      "Pack a cooler (limited food)",
+      "Long beautiful boardwalk through dunes",
+      "Check seasonal hours on ccprc.com",
+    ],
+  },
+  {
+    id: 303,
+    name: "Sullivan's Island Beach",
+    passType: "free",
+    address: "Sullivan's Island, SC 29482",
+    desc: "Beautiful island beach with free street parking, no facilities, charming island vibe",
+    tips: [
+      "Free! No parking pass needed (park on side streets)",
+      "No lifeguards/restrooms/showers",
+      "Bring everything you need",
+      "Walk to Middle St restaurants after (Obstinate Daughter, Home Team BBQ)",
+      "Less crowded than Folly or IOP",
+    ],
+  },
+  {
+    id: 304,
+    name: "Edisto Beach State Park",
+    passType: "state",
+    address: "8377 State Cabin Rd, Edisto Island, SC 29438",
+    desc: "1 hr from Charleston, maritime forest trails, nature center, beachfront camping",
+    tips: [
+      "Great day trip or overnight",
+      "$8 adults/$5 kids or free with State Park Pass",
+      "ONLY beachfront camping in Charleston County (book months ahead)",
+      "4-mile nature trail through maritime forest",
+      "Environmental Learning Center great for kids",
+    ],
+  },
+  {
+    id: 305,
+    name: "Hunting Island State Park",
+    passType: "state",
+    address: "2555 Sea Island Pkwy, Hunting Island, SC 29920",
+    desc: "2 hrs from Charleston, 5 miles of beach, driftwood shore, lighthouse, nature center",
+    tips: [
+      "2 hours but unforgettable",
+      "$8 adults/$5 kids or free with State Park Pass",
+      "Driftwood/boneyard beach is incredible (kids love climbing)",
+      "Lighthouse under repair but grounds beautiful",
+      "Pack lunch (limited food on island)",
+      "Alligators in lagoon (keep distance with toddlers)",
+    ],
+  },
 ];
 
 const LIBRARIES = [
@@ -110,9 +198,41 @@ const Badge = ({ children, color = "#E0F2FE", textColor = "#0369A1", style = {} 
   <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: 20, fontSize: 12, fontWeight: 600, background: color, color: textColor, whiteSpace: "nowrap", ...style }}>{children}</span>
 );
 
-const PassBadge = ({ type }) => {
-  if (type === "gold") return <Badge color="#FEF3C7" textColor="#92400E">🏅 Gold Pass</Badge>;
-  if (type === "state") return <Badge color="#D1FAE5" textColor="#065F46">🌲 State Park Pass</Badge>;
+const PassBadge = ({ type, onClick, style = {} }) => {
+  const clickable = typeof onClick === "function";
+  const Wrapper = clickable ? "button" : "span";
+
+  const baseButtonStyle = clickable
+    ? {
+        border: "none",
+        background: "transparent",
+        padding: 0,
+        cursor: "pointer",
+        fontFamily: "inherit",
+      }
+    : null;
+
+  if (type === "gold") {
+    return (
+      <Wrapper type={clickable ? "button" : undefined} onClick={clickable ? onClick : undefined} style={baseButtonStyle}>
+        <Badge color="#FEF3C7" textColor="#92400E" style={style}>🏅 Gold Pass</Badge>
+      </Wrapper>
+    );
+  }
+  if (type === "state") {
+    return (
+      <Wrapper type={clickable ? "button" : undefined} onClick={clickable ? onClick : undefined} style={baseButtonStyle}>
+        <Badge color="#D1FAE5" textColor="#065F46" style={style}>🌲 State Park Pass</Badge>
+      </Wrapper>
+    );
+  }
+  if (type === "free") {
+    return (
+      <Wrapper type={clickable ? "button" : undefined} onClick={clickable ? onClick : undefined} style={baseButtonStyle}>
+        <Badge color="#E0E7FF" textColor="#3730A3" style={style}>✨ Free</Badge>
+      </Wrapper>
+    );
+  }
   return null;
 };
 
@@ -171,10 +291,20 @@ export default function CharlestonPlaygrounds() {
   const navItems = [
     { key: "playgrounds", label: "Playgrounds", icon: "🛝" },
     { key: "activities", label: "Activities", icon: "🎪" },
+    { key: "beaches", label: "Beaches", icon: "🏖️" },
     { key: "libraries", label: "Libraries", icon: "📚" },
     { key: "passes", label: "Passes", icon: "🎫" },
     { key: "community", label: "Community", icon: "💬" },
   ];
+
+  const goToPasses = useCallback(() => {
+    setView("passes");
+    setSelectedPlayground(null);
+  }, []);
+
+  const mapsLink = useCallback((query) => {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  }, []);
 
   // ─── Render ────────────────────────────────────────────────────────────────
   return (
@@ -413,7 +543,7 @@ export default function CharlestonPlaygrounds() {
                       </div>
                       <p style={{ margin: "0 0 8px", fontSize: 13, color: "#4B5563", lineHeight: 1.5 }}>{pg.desc}</p>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-                        {pg.passType && <PassBadge type={pg.passType} />}
+                        {pg.passType && <PassBadge type={pg.passType} onClick={goToPasses} />}
                         {pg.tags.slice(0, 5).map(t => <Badge key={t} style={{ fontSize: 11 }}>{TAGS[t]}</Badge>)}
                         {pg.tags.length > 5 && <Badge color="#F3F4F6" textColor="#6B7280" style={{ fontSize: 11 }}>+{pg.tags.length - 5} more</Badge>}
                       </div>
@@ -470,7 +600,7 @@ export default function CharlestonPlaygrounds() {
 
                 <p style={{ fontSize: 15, lineHeight: 1.7, color: "#374151", margin: "0 0 20px" }}>{pg.desc}</p>
 
-                {pg.passType && <div style={{ marginBottom: 16 }}><PassBadge type={pg.passType} /></div>}
+                {pg.passType && <div style={{ marginBottom: 16 }}><PassBadge type={pg.passType} onClick={goToPasses} /></div>}
 
                 {/* Tags */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 24 }}>
@@ -543,13 +673,60 @@ export default function CharlestonPlaygrounds() {
                       <p style={{ margin: "0 0 6px", fontSize: 12, color: palette.textMuted, fontWeight: 600 }}>📍 {act.area} — {act.address}</p>
                       <p style={{ margin: "0 0 8px", fontSize: 13, color: "#4B5563", lineHeight: 1.5 }}>{act.desc}</p>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                        {act.passType && <PassBadge type={act.passType} onClick={goToPasses} style={{ fontSize: 11 }} />}
                         {act.tags.map(t => (
-                          <Badge key={t} color={t.includes("Gold") || t.includes("State") ? "#FEF3C7" : "#E0F2FE"} textColor={t.includes("Gold") || t.includes("State") ? "#92400E" : "#0369A1"} style={{ fontSize: 11 }}>
+                          <Badge key={t} style={{ fontSize: 11 }}>
                             {t}
                           </Badge>
                         ))}
                       </div>
                     </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ═══ BEACHES VIEW ═══ */}
+        {view === "beaches" && (
+          <div style={{ marginTop: 20 }}>
+            <h2 style={{ fontFamily: "'Lilita One', cursive", fontSize: 22, color: palette.primary, margin: "0 0 4px" }}>Best Family Beaches</h2>
+            <p style={{ color: palette.textMuted, fontSize: 14, margin: "0 0 20px", fontWeight: 600 }}>
+              County parks, free beaches, and state park day trips — with the simple tips that make a beach day easier.
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {BEACHES.map(b => (
+                <div key={b.id} style={{ background: "white", borderRadius: 20, padding: "20px", border: `1px solid ${palette.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+                    <div>
+                      <h3 style={{ margin: "0 0 4px", fontSize: 16, fontWeight: 900 }}>{b.name}</h3>
+                      <a
+                        href={mapsLink(b.address)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ margin: 0, fontSize: 12, color: palette.primary, fontWeight: 800, textDecoration: "none" }}
+                      >
+                        📍 {b.address} ↗
+                      </a>
+                    </div>
+                    <div style={{ flexShrink: 0 }}>
+                      <PassBadge type={b.passType} onClick={b.passType === "free" ? null : goToPasses} />
+                    </div>
+                  </div>
+
+                  <p style={{ margin: "10px 0 12px", fontSize: 13, color: "#4B5563", lineHeight: 1.6 }}>{b.desc}</p>
+
+                  <div style={{ background: "#F9FAFB", borderRadius: 16, padding: "14px 16px", border: `1px solid ${palette.border}` }}>
+                    <div style={{ fontWeight: 900, fontSize: 13, marginBottom: 8, color: palette.text }}>Numbered tips</div>
+                    <ol style={{ margin: 0, paddingLeft: 18, display: "grid", gap: 6 }}>
+                      {b.tips.map((t, idx) => (
+                        <li key={`${b.id}-${idx}`} style={{ fontSize: 13, color: "#374151", lineHeight: 1.5, fontWeight: 600 }}>
+                          {t}
+                        </li>
+                      ))}
+                    </ol>
                   </div>
                 </div>
               ))}
@@ -595,11 +772,37 @@ export default function CharlestonPlaygrounds() {
                     <p style={{ margin: "2px 0 0", fontSize: 13, color: "#92400E", fontWeight: 600 }}>$84/yr residents • $99/yr non-residents • $69/yr seniors</p>
                   </div>
                 </div>
-                <p style={{ fontSize: 14, lineHeight: 1.7, color: "#78350F", margin: "0 0 12px" }}>
-                  Unlimited admission to 15+ county parks for up to 15 people per vehicle. Includes beaches (Isle of Palms, Folly, Kiawah), all county parks, waterparks, Holiday Festival of Lights, and $15 off SC Aquarium memberships.
-                </p>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#92400E" }}>
-                  🛝 Playgrounds included: Palmetto Islands, James Island County Park, Wannamaker, Laurel Hill, and more
+                <div style={{ fontSize: 14, lineHeight: 1.7, color: "#78350F" }}>
+                  <div style={{ fontWeight: 900, marginBottom: 8 }}>Parks & Facilities (up to 15 per vehicle):</div>
+                  <div style={{ marginBottom: 12 }}>
+                    James Island County Park, Palmetto Islands County Park, Wannamaker County Park, Wannamaker North Trail, Caw Caw Interpretive Center, Johns Island County Park, McLeod Plantation Historic Site (up to 4 visitors), Laurel Hill County Park, Lighthouse Inlet Heritage Preserve, Meggett County Park, Stono River County Park, West County Aquatic Center (up to 4 visitors)
+                  </div>
+
+                  <div style={{ fontWeight: 900, marginBottom: 8 }}>Beaches (up to 15 per vehicle):</div>
+                  <div style={{ marginBottom: 12 }}>
+                    Folly Beach County Park, Isle of Palms County Park, Kiawah Beachwalker Park
+                  </div>
+
+                  <div style={{ fontWeight: 900, marginBottom: 8 }}>Events included:</div>
+                  <div style={{ marginBottom: 12 }}>
+                    Harvest Festival, Holiday Festival of Lights (one-time admission), Latin American Festival, Lowcountry Cajun Festival, Palmetto Park Jam, Reggae Nights Summer Concert Series
+                  </div>
+
+                  <div style={{ fontWeight: 900, marginBottom: 8 }}>Perks:</div>
+                  <div style={{ marginBottom: 12 }}>
+                    $15 off SC Aquarium annual membership, Caw Caw Early Morning Bird Walks, partner discounts with RiverDogs/Stingrays/Battery
+                  </div>
+
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "#92400E" }}>
+                    Note: Gold Pass does NOT include waterparks (need separate Splash Pass), state parks, or city parks. Also note: Gold Pass does NOT guarantee beach parking on busy days (April 1 – Labor Day).
+                  </div>
+
+                  <div style={{ marginTop: 10, fontSize: 13, fontWeight: 800 }}>
+                    Learn more:{" "}
+                    <a href="https://ccprc.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#92400E" }}>
+                      ccprc.com
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -612,9 +815,36 @@ export default function CharlestonPlaygrounds() {
                     <p style={{ margin: "2px 0 0", fontSize: 13, color: "#065F46", fontWeight: 600 }}>Available online, at parks, or borrow free from your library!</p>
                   </div>
                 </div>
-                <p style={{ fontSize: 14, lineHeight: 1.7, color: "#064E3B", margin: "0 0 12px" }}>
-                  Access to all SC State Parks including Charles Towne Landing (Animal Forest zoo, replica sailing ship, 80 acres of gardens), plus beaches at Edisto, Hunting Island, Huntington Beach, and Myrtle Beach state parks.
-                </p>
+                <div style={{ fontSize: 14, lineHeight: 1.7, color: "#064E3B" }}>
+                  <div style={{ fontWeight: 900, marginBottom: 8 }}>Near Charleston (day trips):</div>
+                  <ul style={{ margin: "0 0 12px", paddingLeft: 18 }}>
+                    <li><span style={{ fontWeight: 800 }}>Charles Towne Landing</span> (Animal Forest zoo, replica ship, gardens) — 15 min from downtown</li>
+                    <li><span style={{ fontWeight: 800 }}>Colonial Dorchester Historic Site</span> — 20 min</li>
+                    <li><span style={{ fontWeight: 800 }}>Givhans Ferry State Park</span> (Edisto River, canoeing, camping) — 45 min</li>
+                    <li><span style={{ fontWeight: 800 }}>Edisto Beach State Park</span> (beach, camping, nature trails) — 1 hr</li>
+                    <li><span style={{ fontWeight: 800 }}>Colleton State Park</span> (river, nature trails) — 1 hr</li>
+                    <li><span style={{ fontWeight: 800 }}>Hampton Plantation State Historic Site</span> — 1 hr</li>
+                  </ul>
+
+                  <div style={{ fontWeight: 900, marginBottom: 8 }}>Beach Parks:</div>
+                  <ul style={{ margin: "0 0 12px", paddingLeft: 18 }}>
+                    <li><span style={{ fontWeight: 800 }}>Edisto Beach State Park</span> — 1 hr from Charleston</li>
+                    <li><span style={{ fontWeight: 800 }}>Hunting Island State Park</span> — 2 hrs (lighthouse, driftwood beach)</li>
+                    <li><span style={{ fontWeight: 800 }}>Huntington Beach State Park</span> — 2 hrs (Murrells Inlet, near Brookgreen Gardens)</li>
+                    <li><span style={{ fontWeight: 800 }}>Myrtle Beach State Park</span> — 2.5 hrs</li>
+                  </ul>
+
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "#065F46" }}>
+                    Note: SC All Park Passport available online, at any state park, or FREE to borrow from Charleston County Public Library for 1 week.
+                  </div>
+
+                  <div style={{ marginTop: 10, fontSize: 13, fontWeight: 800 }}>
+                    Learn more:{" "}
+                    <a href="https://southcarolinaparks.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#065F46" }}>
+                      southcarolinaparks.com
+                    </a>
+                  </div>
+                </div>
               </div>
 
               {/* Explore with CCPL */}
