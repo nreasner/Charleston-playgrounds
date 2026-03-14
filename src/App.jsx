@@ -51,6 +51,49 @@ const BH=[{n:"Isle of Palms County Park",ad:"14th Ave, IOP",ps:"gold",ds:"Best f
 const LB=[{n:"Main Library",ad:"68 Calhoun St",nt:"Storytimes & crafts."},{n:"Bees Ferry",ad:"3689 Bees Ferry Rd",nt:"Gated outdoor play!"},{n:"Mt. Pleasant",ad:"1133 Mathis Ferry Rd",nt:"Baby storytimes."},{n:"Otranto Road",ad:"2261 Otranto Rd",nt:"Weekly storytimes."},{n:"James Island",ad:"1248 Camp Rd",nt:"Toddler storytimes."},{n:"John's Island",ad:"3531 Maybank Hwy",nt:"Summer reading."},{n:"Hurd/St. Andrews",ad:"1735 N Woodmere Dr",nt:"Newly renovated!"},{n:"Dorchester Rd",ad:"6325 Dorchester Rd",nt:"30+ Storytime Kits."}];
 const CM=[{h:"@jetsetchristina",nm:"JetsetChristina",u:"https://www.instagram.com/jetsetchristina/",ds:"Luxury travel & family · 116K",c:"#E8D5B7",i:"JC"},{h:"@chswithkids",nm:"CHS With Kids",u:"https://www.instagram.com/chswithkids/",ds:"Parent recs & weekends",c:"#B5EAD7",i:"CK"},{h:"@charlestontoddlers",nm:"Charleston Toddlers",u:"https://www.instagram.com/charlestontoddlers/",ds:"Toddler activities",c:"#C7CEEA",i:"CT"},{h:"@littlesinthelowcountry",nm:"Littles in the Lowcountry",u:"https://www.instagram.com/littlesinthelowcountry/",ds:"Adventures & gems",c:"#FFD6E0",i:"LL"}];
 
+/* ═══ GOOGLE PLACES PHOTO INTEGRATION ═══ */
+// To enable real photos:
+// 1. Get a Google Maps API key at console.cloud.google.com
+// 2. Enable "Places API" and "Maps JavaScript API"
+// 3. Restrict key to charlestonplaygrounds.com
+// 4. Add to .env: VITE_GOOGLE_PLACES_KEY=your_key_here
+const GKEY=typeof import.meta!=="undefined"&&import.meta.env?.VITE_GOOGLE_PLACES_KEY||"";
+const PIDS={3:"ChIJ9Z_RxAB9_ogRQpgniSCkOoo",5:"ChIJoQd6lnl7_ogRARhYCS1fEZE",9:"ChIJzw8vtup7_ogR4FnvI_pwqMY",10:"ChIJBX3NdbBi_ogRJ30r0dak2-8",11:"ChIJs43LHhd5_ogR-mQo-qQXMDQ",12:"ChIJDVQO0x15_ogR8CVS0K3yj48",14:"ChIJw63KiLjX_YgRoMFW5uE_tRE",19:"ChIJk8wpxlF6_ogRsQfHPDOotlc",20:"ChIJs19Aq3N6_ogR9LquDzVhqE0",21:"ChIJbS-NaA96_ogR86R4mF77ymk",22:"ChIJ7Z0GaD16_ogRhZaBSDm1KaE",23:"ChIJLe2Ic0p6_ogRrnl29c3tqt8",24:"ChIJVTpgHABl_ogRWPT_7OQVFO8",25:"ChIJq6pT-qBh_ogR2UScMW3eugc",26:"ChIJzRiTMgpu_ogRUQXSBp2bOLY",27:"ChIJp0YRcYlw_ogRZIR5ZgKLqGM",32:"ChIJy0DeoOlv_ogRR6UfFKnQxCU",33:"ChIJ839Gyhxw_ogROzgaNoyGqEc",35:"ChIJtS4hklFx_ogRTwHFTpkRTEs"};
+
+// Load Google Maps JS API once (adds Places library for photo fetching)
+let gMapsLoaded=false;let gMapsLoading=false;let gMapsCallbacks=[];
+function loadGMaps(cb){
+  if(gMapsLoaded){cb();return;}
+  gMapsCallbacks.push(cb);
+  if(gMapsLoading)return;
+  gMapsLoading=true;
+  window._gmcb=()=>{gMapsLoaded=true;gMapsCallbacks.forEach(fn=>fn());gMapsCallbacks=[];};
+  const s=document.createElement("script");
+  s.src=`https://maps.googleapis.com/maps/api/js?key=${GKEY}&libraries=places&callback=_gmcb`;
+  s.async=true;document.head.appendChild(s);
+}
+
+// Photo component: uses Google Places JS API, caches in localStorage, falls back to emoji
+const PlacePhoto=({id,emoji,hue,height=120,style:sx={}})=>{
+  const[src,setSrc]=useState(()=>{try{return localStorage.getItem("cpg_ph_"+id)||null}catch{return null}});
+  const pid=PIDS[id];
+  useEffect(()=>{
+    if(!GKEY||!pid||src)return;
+    loadGMaps(()=>{
+      const svc=new window.google.maps.places.PlacesService(document.createElement("div"));
+      svc.getDetails({placeId:pid,fields:["photos"]},(place,status)=>{
+        if(status==="OK"&&place?.photos?.length){
+          const url=place.photos[0].getUrl({maxWidth:600,maxHeight:400});
+          try{localStorage.setItem("cpg_ph_"+id,url)}catch{}
+          setSrc(url);
+        }
+      });
+    });
+  },[id,pid,src]);
+  if(src)return<div style={{width:"100%",height,backgroundImage:`url(${src})`,backgroundSize:"cover",backgroundPosition:"center",...sx}}/>;
+  return<div style={{width:"100%",height,background:`linear-gradient(135deg,hsl(${hue},42%,84%),hsl(${(hue+40)%360},36%,77%))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:height>150?72:40,...sx}}>{emoji}</div>;
+};
+
 /* ═══ UNIFIED DESIGN SYSTEM ═══ */
 const CARD={background:$.cd,borderRadius:16,border:`1px solid ${$.b}`,padding:16,width:"100%",boxSizing:"border-box"};
 const SECTION_GAP=10; // gap between cards everywhere
@@ -125,12 +168,12 @@ return(
 <div style={{display:"flex",gap:5,overflowX:"auto",marginBottom:8,paddingBottom:3}}>{AR.map(a=><button key={a} onClick={()=>sA(a)} style={{padding:"6px 12px",borderRadius:18,border:"none",cursor:"pointer",background:ar===a?$.a:$.cd,color:ar===a?"white":$.t,fontWeight:700,fontSize:11,fontFamily:"inherit",flexShrink:0}}>{a}</button>)}</div>
 <div style={{display:"flex",flexWrap:"wrap",gap:3,marginBottom:8}}>{Object.entries(TG).map(([k,l])=><button key={k} onClick={()=>sTg(p=>p.includes(k)?p.filter(x=>x!==k):[...p,k])} style={{padding:"3px 8px",borderRadius:12,cursor:"pointer",border:tg.includes(k)?`2px solid ${$.a}`:"2px solid transparent",background:tg.includes(k)?$.al:"#EFEDE8",color:tg.includes(k)?$.a:$.m,fontWeight:600,fontSize:10,fontFamily:"inherit"}}>{l}</button>)}</div>
 <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:SECTION_GAP}}><select value={so} onChange={e=>sS(e.target.value)} style={{padding:"4px 8px",borderRadius:8,border:`1px solid ${$.b}`,fontSize:11,fontFamily:"inherit",background:"white",color:$.t}}>{RC.map(c=><option key={c.k} value={c.k}>{c.i} {c.l}</option>)}</select><span style={{marginLeft:"auto",fontSize:11,fontWeight:700,color:$.m}}>{fl.length} results</span></div>
-{fl.map(pg=><div key={pg.id} onClick={()=>sD(pg)} style={{...CARD,marginBottom:SECTION_GAP,padding:0,overflow:"hidden",cursor:"pointer"}}><div className="mob-col" style={{display:"flex"}}><div className="mob-full" style={{width:110,minHeight:100,flexShrink:0,background:`linear-gradient(135deg,hsl(${pg.h},42%,84%),hsl(${(pg.h+40)%360},36%,77%))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:40}}>{pg.e}</div><div style={{padding:"10px 12px",flex:1,minWidth:0}}><h3 style={{margin:0,fontSize:14,fontWeight:800}}>{pg.n}</h3><MapLink ad={pg.ad}>📍 {pg.a}</MapLink>{pg.r.overall>0?<div style={{margin:"3px 0"}}><Stars v={pg.r.overall}/></div>:<div style={{margin:"3px 0",fontSize:10,color:$.a,fontWeight:700}}>🆕 Rate me!</div>}<p style={{margin:0,fontSize:11,color:"#666",lineHeight:1.35,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{pg.d}</p><div style={{display:"flex",flexWrap:"wrap",gap:3,marginTop:3}}>{pg.p&&<PassBadge p={pg.p}/>}{pg.t.slice(0,3).map(t=><Badge key={t}>{TG[t]}</Badge>)}{pg.t.length>3&&<Badge bg="#EFEDE8" fg={$.m}>+{pg.t.length-3}</Badge>}</div></div></div></div>)}
+{fl.map(pg=><div key={pg.id} onClick={()=>sD(pg)} style={{...CARD,marginBottom:SECTION_GAP,padding:0,overflow:"hidden",cursor:"pointer"}}><div className="mob-col" style={{display:"flex"}}><div className="mob-full" style={{width:110,minHeight:100,flexShrink:0,overflow:"hidden"}}><PlacePhoto id={pg.id} emoji={pg.e} hue={pg.h} height={200} style={{minHeight:"100%"}}/></div><div style={{padding:"10px 12px",flex:1,minWidth:0}}><h3 style={{margin:0,fontSize:14,fontWeight:800}}>{pg.n}</h3><MapLink ad={pg.ad}>📍 {pg.a}</MapLink>{pg.r.overall>0?<div style={{margin:"3px 0"}}><Stars v={pg.r.overall}/></div>:<div style={{margin:"3px 0",fontSize:10,color:$.a,fontWeight:700}}>🆕 Rate me!</div>}<p style={{margin:0,fontSize:11,color:"#666",lineHeight:1.35,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{pg.d}</p><div style={{display:"flex",flexWrap:"wrap",gap:3,marginTop:3}}>{pg.p&&<PassBadge p={pg.p}/>}{pg.t.slice(0,3).map(t=><Badge key={t}>{TG[t]}</Badge>)}{pg.t.length>3&&<Badge bg="#EFEDE8" fg={$.m}>+{pg.t.length-3}</Badge>}</div></div></div></div>)}
 {!fl.length&&<div style={{textAlign:"center",padding:30,color:$.m}}>🔍 No matches</div>}
 <Tip/></div>}
 
 {/* DETAIL */}
-{vw==="playgrounds"&&dt&&(()=>{const p=dt;return<div><button onClick={()=>sD(null)} style={{background:"none",border:"none",cursor:"pointer",fontFamily:"inherit",fontSize:13,fontWeight:700,color:$.p,padding:0,marginBottom:SECTION_GAP}}>← Back</button><div style={{...CARD,padding:0,overflow:"hidden"}}><div style={{width:"100%",height:180,background:`linear-gradient(135deg,hsl(${p.h},42%,84%),hsl(${(p.h+40)%360},36%,77%))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:72}}>{p.e}</div><div style={{padding:16}}><h2 style={{fontFamily:"'Lilita One',cursive",fontSize:20,color:$.p,margin:"0 0 3px"}}>{p.n}</h2><MapLink ad={p.ad}/><div style={{display:"flex",flexWrap:"wrap",gap:5,margin:"10px 0"}}><button onClick={()=>tF(p.id)} style={{padding:"7px 12px",borderRadius:10,border:`2px solid ${fv.includes(p.id)?"#EF4444":$.b}`,background:fv.includes(p.id)?"#FEE2E2":$.cd,cursor:"pointer",fontFamily:"inherit",fontWeight:700,fontSize:12,color:$.t}}>{fv.includes(p.id)?"❤️ Fav'd":"🤍 Fav"}</button><button onClick={()=>tB(p.id)} style={{padding:"7px 12px",borderRadius:10,border:`2px solid ${bk.includes(p.id)?$.od:$.b}`,background:bk.includes(p.id)?$.o:$.cd,cursor:"pointer",fontFamily:"inherit",fontWeight:700,fontSize:12,color:$.t}}>{bk.includes(p.id)?"🪣 Listed":"🪣 Add"}</button><button onClick={()=>tV(p.id)} style={{padding:"7px 12px",borderRadius:10,border:`2px solid ${vi.includes(p.id)?"#059669":$.b}`,background:vi.includes(p.id)?"#D1FAE5":$.cd,cursor:"pointer",fontFamily:"inherit",fontWeight:700,fontSize:12,color:$.t}}>{vi.includes(p.id)?"✅ Done":"☐ Visit"}</button></div><p style={{fontSize:13,lineHeight:1.6,color:"#444",margin:"0 0 12px"}}>{p.d}</p>{p.p&&<div style={{marginBottom:8}}><PassBadge p={p.p}/></div>}<div style={{display:"flex",flexWrap:"wrap",gap:3,marginBottom:14}}>{p.t.map(t=><Badge key={t}>{TG[t]}</Badge>)}</div>
+{vw==="playgrounds"&&dt&&(()=>{const p=dt;return<div><button onClick={()=>sD(null)} style={{background:"none",border:"none",cursor:"pointer",fontFamily:"inherit",fontSize:13,fontWeight:700,color:$.p,padding:0,marginBottom:SECTION_GAP}}>← Back</button><div style={{...CARD,padding:0,overflow:"hidden"}}><PlacePhoto id={p.id} emoji={p.e} hue={p.h} height={220}/><div style={{padding:16}}><h2 style={{fontFamily:"'Lilita One',cursive",fontSize:20,color:$.p,margin:"0 0 3px"}}>{p.n}</h2><MapLink ad={p.ad}/><div style={{display:"flex",flexWrap:"wrap",gap:5,margin:"10px 0"}}><button onClick={()=>tF(p.id)} style={{padding:"7px 12px",borderRadius:10,border:`2px solid ${fv.includes(p.id)?"#EF4444":$.b}`,background:fv.includes(p.id)?"#FEE2E2":$.cd,cursor:"pointer",fontFamily:"inherit",fontWeight:700,fontSize:12,color:$.t}}>{fv.includes(p.id)?"❤️ Fav'd":"🤍 Fav"}</button><button onClick={()=>tB(p.id)} style={{padding:"7px 12px",borderRadius:10,border:`2px solid ${bk.includes(p.id)?$.od:$.b}`,background:bk.includes(p.id)?$.o:$.cd,cursor:"pointer",fontFamily:"inherit",fontWeight:700,fontSize:12,color:$.t}}>{bk.includes(p.id)?"🪣 Listed":"🪣 Add"}</button><button onClick={()=>tV(p.id)} style={{padding:"7px 12px",borderRadius:10,border:`2px solid ${vi.includes(p.id)?"#059669":$.b}`,background:vi.includes(p.id)?"#D1FAE5":$.cd,cursor:"pointer",fontFamily:"inherit",fontWeight:700,fontSize:12,color:$.t}}>{vi.includes(p.id)?"✅ Done":"☐ Visit"}</button></div><p style={{fontSize:13,lineHeight:1.6,color:"#444",margin:"0 0 12px"}}>{p.d}</p>{p.p&&<div style={{marginBottom:8}}><PassBadge p={p.p}/></div>}<div style={{display:"flex",flexWrap:"wrap",gap:3,marginBottom:14}}>{p.t.map(t=><Badge key={t}>{TG[t]}</Badge>)}</div>
 {p.r.overall>0&&<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(145px,1fr))",gap:4,marginBottom:12}} className="mob-1">{RC.map(c=><div key={c.k} style={{background:"#F5F3EE",borderRadius:8,padding:"6px 8px",display:"flex",justifyContent:"space-between",alignItems:"center"}}><span style={{fontSize:10,fontWeight:700}}>{c.i} {c.l}</span><Stars v={p.r[c.k]||0} s={10}/></div>)}</div>}
 <div style={{background:$.w,borderRadius:10,padding:10,marginBottom:12}}><b style={{fontSize:12}}>⭐ Rate</b><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(145px,1fr))",gap:3,marginTop:4}} className="mob-1">{RC.map(c=><div key={c.k} style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><span style={{fontSize:10,fontWeight:600}}>{c.i} {c.l}</span><div>{[1,2,3,4,5].map(x=><button key={x} onClick={gd(()=>sUr(prev=>({...prev,[`${p.id}-${c.k}`]:x})))} style={{background:"none",border:"none",fontSize:16,cursor:"pointer",padding:"0 1px",color:(ur[`${p.id}-${c.k}`]||0)>=x?"#F59E0B":"#D1D5DB"}}>★</button>)}</div></div>)}</div></div>
 {p.f?.length>0&&<div style={{marginBottom:12}}><b style={{fontSize:13,color:$.p}}>🍽️ Eats</b>{p.f.map((r,i)=><a key={i} href={gm(r.a)} target="_blank" rel="noopener noreferrer" style={{display:"block",background:"#F5F3EE",borderRadius:8,padding:"8px 10px",textDecoration:"none",color:$.t,border:`1px solid ${$.b}`,marginTop:4}}><b style={{fontSize:13}}>{r.n}</b> <Badge bg={$.pl} fg={$.p}>{r.t}</Badge><br/><span style={{fontSize:11,color:$.m}}>{r.d} · 📍 {r.a}</span></a>)}</div>}
