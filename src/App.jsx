@@ -58,7 +58,12 @@ const CM=[{h:"@jetsetchristina",nm:"JetsetChristina",u:"https://www.instagram.co
 // 3. Restrict key to charlestonplaygrounds.com
 // 4. Add to .env: VITE_GOOGLE_PLACES_KEY=your_key_here
 const GKEY=typeof import.meta!=="undefined"&&import.meta.env?.VITE_GOOGLE_PLACES_KEY||"";
-const PIDS={3:"ChIJ9Z_RxAB9_ogRQpgniSCkOoo",5:"ChIJoQd6lnl7_ogRARhYCS1fEZE",9:"ChIJzw8vtup7_ogR4FnvI_pwqMY",10:"ChIJBX3NdbBi_ogRJ30r0dak2-8",11:"ChIJs43LHhd5_ogR-mQo-qQXMDQ",12:"ChIJDVQO0x15_ogR8CVS0K3yj48",14:"ChIJw63KiLjX_YgRoMFW5uE_tRE",19:"ChIJk8wpxlF6_ogRsQfHPDOotlc",20:"ChIJs19Aq3N6_ogR9LquDzVhqE0",21:"ChIJbS-NaA96_ogR86R4mF77ymk",22:"ChIJ7Z0GaD16_ogRhZaBSDm1KaE",23:"ChIJLe2Ic0p6_ogRrnl29c3tqt8",24:"ChIJVTpgHABl_ogRWPT_7OQVFO8",25:"ChIJq6pT-qBh_ogR2UScMW3eugc",26:"ChIJzRiTMgpu_ogRUQXSBp2bOLY",27:"ChIJp0YRcYlw_ogRZIR5ZgKLqGM",32:"ChIJy0DeoOlv_ogRR6UfFKnQxCU",33:"ChIJ839Gyhxw_ogROzgaNoyGqEc",35:"ChIJtS4hklFx_ogRTwHFTpkRTEs"};
+// Playground IDs (all 35)
+const PIDS={1:"ChIJjeeuXAB9_ogRTH5hQol3r9w",2:"ChIJU3Vfgw58_ogRR4rrpSd2tCo",3:"ChIJ9Z_RxAB9_ogRQpgniSCkOoo",4:"ChIJA7vyawB9_ogR1UmJntqXvCk",5:"ChIJoQd6lnl7_ogRARhYCS1fEZE",6:"ChIJDQMoMH19_ogR7Vi0qoxFOrs",7:"ChIJjc0ziIZ7_ogRDTHzi8u-0UA",8:"ChIJZUqxkmp7_ogRHQv7e-p0AQM",9:"ChIJzw8vtup7_ogR4FnvI_pwqMY",10:"ChIJBX3NdbBi_ogRJ30r0dak2-8",11:"ChIJs43LHhd5_ogR-mQo-qQXMDQ",12:"ChIJDVQO0x15_ogR8CVS0K3yj48",13:"ChIJtRbZpsF5_ogR1JJQwIybqU4",14:"ChIJw63KiLjX_YgRoMFW5uE_tRE",15:"ChIJ2XUVwO_X_YgRIiHjHMuNJDc",16:"ChIJoSs_KtYq_IgRdUeTb7fk3kI",17:"ChIJz5Tv5M5__ogRHY3lyQ9B924",18:"ChIJQeQpW8yH_ogRf2iys6NnUSo",19:"ChIJk8wpxlF6_ogRsQfHPDOotlc",20:"ChIJs19Aq3N6_ogR9LquDzVhqE0",21:"ChIJbS-NaA96_ogR86R4mF77ymk",22:"ChIJ7Z0GaD16_ogRhZaBSDm1KaE",23:"ChIJLe2Ic0p6_ogRrnl29c3tqt8",24:"ChIJVTpgHABl_ogRWPT_7OQVFO8",25:"ChIJq6pT-qBh_ogR2UScMW3eugc",26:"ChIJzRiTMgpu_ogRUQXSBp2bOLY",27:"ChIJp0YRcYlw_ogRZIR5ZgKLqGM",28:"ChIJmwzZc75x_ogRBITMgs0DJHs",29:"ChIJkVWlyQht_ogRcoIp7FwLIi8",30:"ChIJA-AxMahz_ogR_3u29LeD-5I",31:"ChIJcVNJgAJz_ogREjJFRufe5o0",32:"ChIJy0DeoOlv_ogRR6UfFKnQxCU",33:"ChIJ839Gyhxw_ogROzgaNoyGqEc",34:"ChIJMcHAPJws_IgRLDbUw77HPo8",35:"ChIJtS4hklFx_ogRTwHFTpkRTEs"};
+// Beach IDs (keyed by name prefix)
+const BIDS={"Isle":"ChIJA-AxMahz_ogR_3u29LeD-5I","Folly":"ChIJtV2j77LX_YgRdJqYKht03Zs","Kiawah":"ChIJMcHAPJws_IgRLDbUw77HPo8","Sullivan":"ChIJzdQ3BbFu_ogRoEp0stT1HWc","Edisto":"ChIJoT4sssY6_IgRhCdDMBBFq_Y","Hunting":"ChIJJdW_svo__IgRnxjnuLet434"};
+// Library IDs (keyed by name prefix)
+const LIDS={"Main":"ChIJoauIhG16_ogRBT04-DnPv7M","Bees":"ChIJ3eUzLyh9_ogRDjX8cFz8FwU","Mt.":"ChIJTzs_iLBx_ogRNN7cPC2isIo","Otranto":"ChIJvSUpzXBh_ogRkNm4cYogjKE","James":"ChIJS8s717V5_ogROuVDpbrI0mI","John":"ChIJV5Jqo8l__ogRQXfZNR_ZlsU","Hurd":"ChIJb-upcnl8_ogRicfvVh8cpmM","Dorchester":"ChIJFUZHDtpi_ogRV5Vgw3iKWTk"};
 
 // Load Google Maps JS API once (adds Places library for photo fetching)
 let gMapsLoaded=false;let gMapsLoading=false;let gMapsCallbacks=[];
@@ -74,9 +79,10 @@ function loadGMaps(cb){
 }
 
 // Photo component: uses Google Places JS API, caches in localStorage, falls back to emoji
-const PlacePhoto=({id,emoji,hue,height=120,style:sx={}})=>{
-  const[src,setSrc]=useState(()=>{try{return localStorage.getItem("cpg_ph_"+id)||null}catch{return null}});
-  const pid=PIDS[id];
+const PlacePhoto=({id,placeId,emoji,hue,height=120,style:sx={}})=>{
+  const ck="cpg_ph_"+(placeId||id);
+  const[src,setSrc]=useState(()=>{try{return localStorage.getItem(ck)||null}catch{return null}});
+  const pid=placeId||PIDS[id];
   useEffect(()=>{
     if(!GKEY||!pid||src)return;
     loadGMaps(()=>{
@@ -84,12 +90,12 @@ const PlacePhoto=({id,emoji,hue,height=120,style:sx={}})=>{
       svc.getDetails({placeId:pid,fields:["photos"]},(place,status)=>{
         if(status==="OK"&&place?.photos?.length){
           const url=place.photos[0].getUrl({maxWidth:600,maxHeight:400});
-          try{localStorage.setItem("cpg_ph_"+id,url)}catch{}
+          try{localStorage.setItem(ck,url)}catch{}
           setSrc(url);
         }
       });
     });
-  },[id,pid,src]);
+  },[pid,src,ck]);
   if(src)return<div style={{width:"100%",height,backgroundImage:`url(${src})`,backgroundSize:"cover",backgroundPosition:"center",...sx}}/>;
   return<div style={{width:"100%",height,background:`linear-gradient(135deg,hsl(${hue},42%,84%),hsl(${(hue+40)%360},36%,77%))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:height>150?72:40,...sx}}>{emoji}</div>;
 };
@@ -183,10 +189,10 @@ return(
 {vw==="activities"&&<div><SectionTitle>🎪 Things to Do</SectionTitle>{AC.map((a,i)=><div key={i} style={{...CARD,marginBottom:SECTION_GAP}}><div style={{display:"flex",gap:10,alignItems:"flex-start"}}><div style={{fontSize:22,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",background:"#F5F3EE",borderRadius:10,flexShrink:0}}>{a.ic}</div><div style={{flex:1,minWidth:0}}><ExtLink href={a.ur}><span style={{fontSize:14,fontWeight:800,color:$.t}}>{a.n} ↗</span></ExtLink><br/><MapLink ad={a.ad}/><p style={{margin:"3px 0",fontSize:12,color:"#555",lineHeight:1.35}}>{a.ds}</p><div style={{fontSize:11,color:$.p,fontWeight:700}}>🕐 {a.hr} · 💰 {a.co}</div></div></div></div>)}<Tip/></div>}
 
 {/* BEACHES */}
-{vw==="beaches"&&<div><SectionTitle>🏖️ Beaches</SectionTitle>{BH.map((b,i)=><div key={i} style={{...CARD,marginBottom:SECTION_GAP}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:4,marginBottom:4}}><div><h3 style={{margin:0,fontSize:15,fontWeight:800}}>{b.n}</h3><MapLink ad={b.ad}/></div><PassBadge p={b.ps}/></div><p style={{fontSize:12,lineHeight:1.5,color:"#444",margin:"0 0 6px"}}>{b.ds}</p><div style={{background:"#F5F3EE",borderRadius:10,padding:"8px 10px"}}>{b.tp.map((t,j)=><div key={j} style={{fontSize:11,lineHeight:1.5,color:"#444"}}>{t}</div>)}</div></div>)}<Tip/></div>}
+{vw==="beaches"&&<div><SectionTitle>🏖️ Beaches</SectionTitle>{BH.map((b,i)=>{const bid=BIDS[b.n.split(" ")[0]];return<div key={i} style={{...CARD,marginBottom:SECTION_GAP,padding:0,overflow:"hidden"}}>{bid&&<PlacePhoto placeId={bid} emoji="🏖️" hue={195} height={160}/>}<div style={{padding:16}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:4,marginBottom:4}}><div><h3 style={{margin:0,fontSize:15,fontWeight:800}}>{b.n}</h3><MapLink ad={b.ad}/></div><PassBadge p={b.ps}/></div><p style={{fontSize:12,lineHeight:1.5,color:"#444",margin:"0 0 6px"}}>{b.ds}</p><div style={{background:"#F5F3EE",borderRadius:10,padding:"8px 10px"}}>{b.tp.map((t,j)=><div key={j} style={{fontSize:11,lineHeight:1.5,color:"#444"}}>{t}</div>)}</div></div></div>})}<Tip/></div>}
 
 {/* LIBRARIES */}
-{vw==="libraries"&&<div><SectionTitle>📚 Storytimes</SectionTitle><div style={{...CARD,background:$.pl,marginBottom:SECTION_GAP}}><span style={{fontSize:12,fontWeight:600}}>💡 Ask about Storytime Kits & Explore with CCPL for free passes!</span></div><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:SECTION_GAP}} className="mob-1">{LB.map((l,i)=><div key={i} style={CARD}><h3 style={{margin:"0 0 2px",fontSize:13,fontWeight:800}}>📚 {l.n}</h3><MapLink ad={l.ad}/><p style={{margin:"3px 0 0",fontSize:12,color:"#555"}}>{l.nt}</p></div>)}</div><Tip/></div>}
+{vw==="libraries"&&<div><SectionTitle>📚 Storytimes</SectionTitle><div style={{...CARD,background:$.pl,marginBottom:SECTION_GAP}}><span style={{fontSize:12,fontWeight:600}}>💡 Ask about Storytime Kits & Explore with CCPL for free passes!</span></div><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:SECTION_GAP}} className="mob-1">{LB.map((l,i)=>{const lid=LIDS[l.n.split(" ")[0]];return<div key={i} style={{...CARD,padding:0,overflow:"hidden"}}>{lid&&<PlacePhoto placeId={lid} emoji="📚" hue={220} height={120}/>}<div style={{padding:12}}><h3 style={{margin:"0 0 2px",fontSize:13,fontWeight:800}}>📚 {l.n}</h3><MapLink ad={l.ad}/><p style={{margin:"3px 0 0",fontSize:12,color:"#555"}}>{l.nt}</p></div></div>})}</div><Tip/></div>}
 
 {/* PASSES — same CARD wrapper, accent via left border */}
 {vw==="passes"&&<div><SectionTitle>🎫 Passes 2026</SectionTitle>
