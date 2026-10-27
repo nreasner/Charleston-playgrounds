@@ -10,6 +10,7 @@ declare global {
 
 const KEY = process.env.NEXT_PUBLIC_GOOGLE_PLACES_KEY || "";
 const TTL = 3 * 24 * 60 * 60 * 1000; // photo links expire, so refresh every few days
+const MAX_PHOTOS = 5; // cost control: each photo displayed is a billable Google request
 
 export interface PlacePhoto {
   url: string;
@@ -20,7 +21,7 @@ export interface PlacePhoto {
 let loading: Promise<void> | null = null;
 function loadMaps(): Promise<void> {
   if (typeof window === "undefined" || !KEY) return Promise.reject();
-  if (window.google?.maps?.places) return Promise.resolve();
+  if (window.google?.maps?.importLibrary) return Promise.resolve();
   if (loading) return loading;
   loading = new Promise((resolve, reject) => {
     window.__cpMapsCb = () => resolve();
@@ -37,31 +38,27 @@ function loadMaps(): Promise<void> {
 const inflight = new Map<string, Promise<PlacePhoto[]>>();
 
 function fetchPhotos(placeId: string): Promise<PlacePhoto[]> {
-  const ck = "cp_ph2_" + placeId;
+  const ck = "cp_ph3_" + placeId;
   try {
     const c = JSON.parse(localStorage.getItem(ck) || "null");
     if (c && Date.now() - c.t < TTL) return Promise.resolve(c.p);
   } catch {}
   if (inflight.has(placeId)) return inflight.get(placeId)!;
   const p = loadMaps()
-    .then(
-      () =>
-        new Promise<PlacePhoto[]>((resolve) => {
-          const svc = new window.google.maps.places.PlacesService(document.createElement("div"));
-          svc.getDetails({ placeId, fields: ["photos"] }, (place: any, status: string) => {
-            if (status !== "OK" || !place?.photos?.length) return resolve([]);
-            const list: PlacePhoto[] = place.photos.slice(0, 10).map((ph: any) => {
-              const attr: string = ph.html_attributions?.[0] || "";
-              const m = attr.match(/href="([^"]+)"[^>]*>([^<]+)</);
-              return { url: ph.getUrl({ maxWidth: 1200, maxHeight: 900 }), credit: m?.[2], creditUrl: m?.[1] };
-            });
-            try {
-              localStorage.setItem(ck, JSON.stringify({ t: Date.now(), p: list }));
-            } catch {}
-            resolve(list);
-          });
-        })
-    )
+    .then(async () => {
+      // Places API (New). Each photo shown is billed, so keep the count small.
+      const { Place } = await window.google.maps.importLibrary("places");
+      const place = new Place({ id: placeId });
+      await place.fetchFields({ fields: ["photos"] });
+      const list: PlacePhoto[] = (place.photos || []).slice(0, MAX_PHOTOS).map((ph: any) => {
+        const a = ph.authorAttributions?.[0];
+        return { url: ph.getURI({ maxWidth: 1000, maxHeight: 800 }), credit: a?.displayName, creditUrl: a?.uri };
+      });
+      try {
+        localStorage.setItem(ck, JSON.stringify({ t: Date.now(), p: list }));
+      } catch {}
+      return list;
+    })
     .catch(() => [] as PlacePhoto[]);
   inflight.set(placeId, p);
   return p;

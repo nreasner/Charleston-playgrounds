@@ -80,7 +80,7 @@ export function PhotoGallery({ placeId, name, emoji = "🛝" }: { placeId: strin
 
       {list.length > 1 && (
         <div className="gallery" style={{ marginTop: 8 }}>
-          {list.slice(1, 9).map((p, i) => (
+          {list.slice(1).map((p, i) => (
             <button key={i} onClick={() => setOpen(i + 1)} aria-label={`Photo ${i + 2} of ${name}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={p.url} alt="" loading="lazy" />
