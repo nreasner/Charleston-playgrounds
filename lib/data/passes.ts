@@ -1,0 +1,250 @@
+import type { Pass } from "../types";
+
+export const passes: Pass[] = [
+  {
+    slug: "gold-pass",
+    name: "Charleston County Parks Gold Pass",
+    accent: "gold",
+    price: "$84 resident · $99 non-resident",
+    priceTable: [
+      { label: "Charleston County residents", value: "$84 + tax" },
+      { label: "Non-residents", value: "$99 + tax" },
+      { label: "Seniors 60+", value: "$69 + tax" },
+    ],
+    short: "One year of free vehicle entry (up to 15 people) to every Charleston County park and all three county beach parks, plus free admission to six festivals.",
+    bestFor: "Families who visit county parks or beach parks more than a handful of times a year.",
+    includes: [
+      {
+        heading: "County parks",
+        items: [
+          "James Island County Park",
+          "North Charleston Wannamaker County Park",
+          "Palmetto Islands County Park",
+          "Johns Island County Park",
+          "Stono River County Park",
+          "Laurel Hill County Park",
+          "Caw Caw Interpretive Center",
+          "Meggett County Park",
+          "Old Towne Creek County Park",
+          "Wannamaker North Trail",
+          "Lighthouse Inlet Heritage Preserve",
+          "McLeod Plantation Historic Site (up to 4 people)",
+          "West County Aquatic Center (up to 4 people)",
+        ],
+      },
+      {
+        heading: "Beach parks (parking lots only)",
+        items: ["Isle of Palms County Park", "Folly Beach County Park", "Kiawah Beachwalker Park"],
+      },
+      {
+        heading: "Festivals & events",
+        items: [
+          "Holiday Festival of Lights (one visit)",
+          "Harvest Festival",
+          "Lowcountry Cajun Festival",
+          "Latin American Festival",
+          "Palmetto Park Jam",
+          "Reggae Nights Summer Concert Series",
+        ],
+      },
+      {
+        heading: "Partner perks",
+        items: ["$15 off a South Carolina Aquarium annual membership", "Emailed offers for RiverDogs, Stingrays and Battery games"],
+      },
+    ],
+    notIncluded: [
+      "Waterparks (Whirlin' Waters, Splash Zone, Splash Island) — those need a Splash Pass or daily ticket.",
+      "SC State Parks like Charles Towne Landing, Edisto or Hunting Island.",
+      "City-run parks and playgrounds (those are free anyway).",
+      "City beach parking on Folly, IOP Front Beach or Sullivan's.",
+      "Guaranteed beach parking — lots fill April 1–Labor Day, even for pass holders.",
+      "Campsite or shelter discounts.",
+    ],
+    math: "Beach parks charge a per-vehicle fee (often $15 on summer days). Five beach days plus a Festival of Lights visit and you've roughly paid for the pass.",
+    howToBuy: [
+      "Buy online at ccprc.com (the card is mailed to you) or at any county park office.",
+      "Bring the physical card or show it in the CCPRC mobile app — receipts and photos aren't accepted.",
+      "Gold Passes aren't sold at events.",
+    ],
+    links: [
+      { label: "Buy the Gold Pass", url: "https://www.ccprc.com/16/Park-Passes" },
+      { label: "All member benefits", url: "https://www.ccprc.com/passes/gold-pass-member-benefits/" },
+    ],
+    verifiedNote: "Prices and benefits checked against ccprc.com in October 2026.",
+  },
+  {
+    slug: "state-park-passport",
+    name: "SC State Parks ALL Park Passport",
+    accent: "green",
+    price: "$99 a year",
+    priceTable: [
+      { label: "ALL Park Passport (1 year)", value: "$99" },
+      { label: "Seven-Day ALL Park Passport", value: "$65 (in person only)" },
+      { label: "SC residents 65+, legally blind, 100% disabled, SC National Guard", value: "Half price (in person or by phone)" },
+    ],
+    short: "Unlimited entry to all 47 South Carolina state parks for everyone in your car, including Charles Towne Landing, Edisto and Hunting Island.",
+    bestFor: "Families who love Charles Towne Landing or take beach/camping trips to Edisto and Hunting Island.",
+    includes: [
+      {
+        heading: "Near Charleston",
+        items: [
+          "Charles Towne Landing State Historic Site — 15 min",
+          "Colonial Dorchester State Historic Site — 30 min",
+          "Givhans Ferry State Park — 45 min",
+          "Edisto Beach State Park — 1 hr",
+          "Hampton Plantation State Historic Site — 1 hr",
+          "Hunting Island State Park — 2 hrs",
+          "Huntington Beach State Park — 2 hrs",
+        ],
+      },
+      {
+        heading: "Extras",
+        items: [
+          "Free Hunting Island Lighthouse admission (up to 4 per visit)",
+          "Free Atalaya castle admission at Huntington Beach (up to 4 per visit)",
+          "Transferable between your vehicles",
+        ],
+      },
+    ],
+    notIncluded: ["Charleston County parks or beach parks (that's the Gold Pass).", "Camping fees and tours."],
+    math: "If you visit Charles Towne Landing a few times a year and do one Edisto beach day, it usually pays for itself.",
+    howToBuy: ["Online at scparkstore.com, or at any state park office.", "Many SC libraries lend state park passes — ask at your branch."],
+    links: [
+      { label: "Buy a Park Passport", url: "https://southcarolinaparks.com/park-passports" },
+      { label: "Charles Towne Landing", url: "https://southcarolinaparks.com/charles-towne-landing" },
+    ],
+    verifiedNote: "Prices checked against southcarolinaparks.com in October 2026.",
+  },
+  {
+    slug: "super-splash-pass",
+    name: "Splash Passes (Super & Basic)",
+    accent: "blue",
+    price: "$99.99 Super · $69.99 Basic",
+    priceTable: [
+      { label: "Super Splash Pass", value: "$99.99 + tax" },
+      { label: "Basic Splash Pass", value: "$69.99 + tax" },
+    ],
+    short: "Unlimited summer visits to the county waterparks — plus free gate entry to the parks they're in during waterpark season.",
+    bestFor: "Families who'll hit a waterpark more than 4–5 times in a summer.",
+    includes: [
+      {
+        heading: "Super Splash Pass",
+        items: [
+          "Unlimited Whirlin' Waters Adventure Waterpark",
+          "Unlimited Splash Zone (James Island County Park)",
+          "Unlimited Splash Island (Palmetto Islands County Park)",
+          "Free gate entry to Wannamaker, James Island and Palmetto Islands county parks during waterpark season",
+        ],
+      },
+      {
+        heading: "Basic Splash Pass",
+        items: [
+          "Unlimited Splash Zone and Splash Island",
+          "Free gate entry to James Island and Palmetto Islands during waterpark season",
+          "Discounted Whirlin' Waters admission ($15.99)",
+        ],
+      },
+    ],
+    notIncluded: ["Beach parks and festivals (that's the Gold Pass).", "Off-season park entry."],
+    howToBuy: ["Online at ccprc.com or at a park office.", "A photo is required — email it to CCPRC Customer Relations ahead of time to speed things up.", "The card (or app) must be scanned at entry."],
+    links: [{ label: "Buy a Splash Pass", url: "https://www.ccprc.com/16/Park-Passes" }],
+    verifiedNote: "Prices checked against ccprc.com in October 2026.",
+  },
+  {
+    slug: "individual-pass",
+    name: "County Parks Individual Pass",
+    accent: "coral",
+    price: "$30 resident · $40 non-resident",
+    priceTable: [
+      { label: "Charleston County residents", value: "$30 + tax" },
+      { label: "Non-residents", value: "$40 + tax" },
+    ],
+    short: "Covers just the pass holder at most county parks — handy for a parent who walks or bikes in with a stroller.",
+    bestFor: "A walker, runner or stroller parent who usually goes solo.",
+    includes: [
+      {
+        heading: "Parks",
+        items: [
+          "James Island, Wannamaker, Palmetto Islands, Johns Island, Stono River, Laurel Hill, Meggett, Old Towne Creek",
+          "Caw Caw Interpretive Center, Lighthouse Inlet, Wannamaker North Trail",
+        ],
+      },
+    ],
+    notIncluded: ["Other people in the car (kids included).", "Beach parks.", "Special events."],
+    howToBuy: ["Online at ccprc.com or at a park office."],
+    links: [{ label: "CCPRC passes", url: "https://www.ccprc.com/16/Park-Passes" }],
+    verifiedNote: "Prices checked against ccprc.com in October 2026.",
+  },
+  {
+    slug: "sc-aquarium-membership",
+    name: "South Carolina Aquarium Membership",
+    accent: "blue",
+    price: "Family memberships from about $249",
+    priceTable: [
+      { label: "Individual", value: "About $99/yr" },
+      { label: "Family (2 adults + kids under 18)", value: "About $249/yr" },
+      { label: "Family Plus (+2 guests per visit)", value: "About $319/yr" },
+      { label: "Angelfish (SNAP/WIC families)", value: "About $40/yr" },
+    ],
+    short: "Unlimited visits to the Aquarium for a year, plus shop and café discounts.",
+    bestFor: "Families who'll go 3+ times a year, or who live downtown.",
+    includes: [
+      {
+        heading: "Perks",
+        items: [
+          "Unlimited general admission",
+          "Gift shop and café discounts",
+          "Member-only events and early access",
+          "Gold Pass holders get $15 off (show your card at the Member Window)",
+        ],
+      },
+    ],
+    notIncluded: ["Parking in the garage."],
+    howToBuy: ["Online at scaquarium.org or at the Member Window."],
+    links: [{ label: "Aquarium memberships", url: "https://scaquarium.org/membership/" }],
+    verifiedNote: "Tier prices are approximate — confirm current pricing on scaquarium.org before buying.",
+  },
+  {
+    slug: "childrens-museum-membership",
+    name: "Children's Museum of the Lowcountry",
+    accent: "purple",
+    price: "Day tickets $13–15 · memberships available",
+    priceTable: [
+      { label: "Door admission", value: "$15" },
+      { label: "Advance online", value: "$13" },
+      { label: "SNAP / WIC / foster families", value: "$3 per person" },
+    ],
+    short: "Admission and membership options for Charleston's hands-on museum for little kids.",
+    bestFor: "Families with kids under 8 who want a reliable rainy-day spot.",
+    includes: [
+      {
+        heading: "Members get",
+        items: ["Unlimited visits for a year", "Early entry before the public", "Discounts on camps and parties"],
+      },
+      {
+        heading: "Special programs",
+        items: ["SuperStars Sundays — sensory-friendly hours for families of kids with special needs", "Quarter Days — admission for a quarter on select dates"],
+      },
+    ],
+    notIncluded: ["Parking (use nearby garages)."],
+    howToBuy: ["Online at explorecml.org or at the front desk."],
+    links: [{ label: "Plan a visit", url: "https://explorecml.org/visit/" }],
+    verifiedNote: "Admission prices confirmed October 2026; check explorecml.org for membership tiers and special-program dates.",
+  },
+  {
+    slug: "explore-with-ccpl",
+    name: "Explore with CCPL (library passes)",
+    accent: "green",
+    price: "Free with a library card",
+    priceTable: [{ label: "Charleston County Public Library card", value: "Free" }],
+    short: "Borrow passes to local attractions with your Charleston County library card.",
+    bestFor: "Trying an attraction before buying a membership.",
+    includes: [{ heading: "Typically available", items: ["Local museum and attraction passes", "Park passes"] }],
+    notIncluded: ["Guaranteed availability — passes are first come, first served."],
+    howToBuy: ["Search the CCPL catalog or ask at any branch desk."],
+    links: [{ label: "CCPL", url: "https://www.ccpl.org" }],
+    verifiedNote: "Which passes are offered changes — check ccpl.org for the current list.",
+  },
+];
+
+export const passBySlug = (slug: string) => passes.find((p) => p.slug === slug);
